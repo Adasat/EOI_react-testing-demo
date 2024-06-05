@@ -7,7 +7,7 @@ import { getUsers } from './services/userService';
 function App() {
   const [list, setList] = useState<any[]>([])
 
-    useEffect(() => {
+  /*   useEffect(() => {
         let getUserFunction = async () => {
             const response = await getUsers()
             const data = await response.json();
@@ -15,7 +15,7 @@ function App() {
         }
         getUserFunction()
         console.log(list)
-    }, [])
+    }, []) */
   return (
     <div className="App">
       <header className="App-header">       

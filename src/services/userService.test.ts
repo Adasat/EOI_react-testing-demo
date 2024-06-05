@@ -16,9 +16,10 @@ afterEach(() => {
 describe('getUsers', () => {
     test('should call getUsers and return users', async () => {
         (global.fetch as jest.Mock).mockImplementation(() => Promise.resolve(mockedFetch));
-        const fetchCall = await getUsers();
+        const fetchCall = await getUsers(5);
 
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expect(fetchCall).toEqual(mockedFetch);
     });
+    
 });
