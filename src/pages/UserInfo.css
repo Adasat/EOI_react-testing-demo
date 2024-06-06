@@ -1,0 +1,17 @@
+#listContainer {
+    display: flex;
+    width: 40vw;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.deleteUser{
+    color: rgba(255, 0, 0, 0.637);
+    stroke: black;
+    cursor: pointer;
+}
+
+.deleteUser:hover {
+    color: rgb(255, 0, 0);
+}

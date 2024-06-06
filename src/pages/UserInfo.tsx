@@ -3,6 +3,8 @@ import { getUsers } from '../services/userService';
 import { CustomForm } from '../components/CustomButton/CustomForm';
 import { MdDelete } from 'react-icons/md';
 
+import './UserInfo.css'
+
 
 export const UserInfo = (users: any) => {
     const [list, setList] = useState<any[]>([])
@@ -27,15 +29,15 @@ export const UserInfo = (users: any) => {
         console.log(list)
     }
     
-    const removeUser = (user: String) => {
-        setList(list.filter((user)=> user.name !== user))
-    }
+      const removeUser = (userName: string) => {
+        setList(list.filter((user) => user.name !== userName))
+      }
     
 
     
   return (
     <div>
-        <ul data-testid='userContainer'>
+      {/* <ul data-testid='userContainer'>
             {
                 list.map((user, i) => (
                     <>
@@ -45,8 +47,18 @@ export const UserInfo = (users: any) => {
                     </>
                 ))
             }
-        </ul>
-        <CustomForm handleChange={handleChange} />
+        </ul> */}
+      {list.map((user, i) => (
+        <div key={i} id='listContainer' data-testid='userContainer'>
+          <li>{user.name}</li>
+          <MdDelete
+            className='deleteUser'
+            onClick={() => removeUser(user.name)}
+          />
+        </div>
+      ))}
+
+      <CustomForm handleChange={handleChange} />
     </div>
   )
 }
