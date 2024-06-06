@@ -4,11 +4,13 @@ import { CustomForm } from '../components/CustomButton/CustomForm';
 import { MdDelete } from 'react-icons/md';
 
 import './UserInfo.css'
+import { FilterInput } from '../components/FilterInput/FilterInput';
 
 
-export const UserInfo = (users: any) => {
+export const UserInfo = () => {
     const [list, setList] = useState<any[]>([])
     const [count, setCount] = useState<Number>(5)
+    const [filteredList, setFilteredList] = useState<any[]>([])
 
     useEffect(() => {
         let getUserFunction = async () => {
@@ -19,40 +21,41 @@ export const UserInfo = (users: any) => {
         getUserFunction()
     }, [])
 
-/*     const handleChange = (e: Event): void => {
-        setList([...list, {name: (e.target as HTMLInputElement).value}])
-    }
- */
-    const handleChange = (user: {name: string}): void => {
-        console.log(user)
-        setList([...list, user])
-        console.log(list)
-    }
-    
-      const removeUser = (userName: string) => {
-        setList(list.filter((user) => user.name !== userName))
-      }
-    
+    const handleFilteredList = (user: string) => {
+        setFilteredList(list?.filter((e) => e?.name?.toLoweCase().includes(user.toLowerCase())))
+        console.log(filteredList)
+    } 
 
+    const handleChange = (user: {name: string}): void => {
+        setList((preList)=> { return [...preList, user];});
+    }
+    
+    const removeUser = (userName: string) => {
+      console.log('click on delete button')
+      setList(list.filter((user) => user.name !== userName))
+    }
+
+    const filteredInputHasInfo = () => {
+        return filteredList.length > 0 ? filteredList : list
+    }
+    
+    useEffect(() => {
+      console.log(list);
+    }, [list]);
     
   return (
-    <div>
-      {/* <ul data-testid='userContainer'>
-            {
-                list.map((user, i) => (
-                    <>
-                    
-                    <li key={i}>{user.name}</li>
-                   <span><MdDelete /></span> 
-                    </>
-                ))
-            }
-        </ul> */}
-      {list.map((user, i) => (
-        <div key={i} id='listContainer' data-testid='userContainer'>
+    <div id='userContainer'  data-testid='userContainer'>
+        <FilterInput onInputChange={handleFilteredList}/>
+     
+      {
+      
+      filteredInputHasInfo().map((user, i) => (
+        <div key={i} className='listContainer'>
           <li>{user.name}</li>
           <MdDelete
+            role='button'
             className='deleteUser'
+            aria-label='deleteBtn'
             onClick={() => removeUser(user.name)}
           />
         </div>

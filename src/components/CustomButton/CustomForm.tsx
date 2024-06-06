@@ -9,7 +9,6 @@ export const CustomForm = ({ handleChange }: CustomFormProps) => {
     const [newUser, setNewUser] = useState('')
 
     const handleClick = () => {
-      alert('click')
       handleChange({name: newUser})
       setNewUser('')
     }

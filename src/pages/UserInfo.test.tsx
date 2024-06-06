@@ -1,9 +1,6 @@
 import React from 'react';
-import { render, screen, waitFor, fireEvent, getByText } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent, getByText, getByTestId } from '@testing-library/react';
 import App from '../App';
-import { UserInfo } from './UserInfo';
-import { log } from 'console';
-import { act } from 'react-dom/test-utils';
 
 let numOfPeople = 5
 let users: any; 
@@ -12,17 +9,18 @@ let users: any;
 
 describe ('Users test', () => {
 
+  afterEach(() => {
+    numOfPeople = 5
+  })
 
   test('APP Should be show 5 users', () => {
     render(<App />);
     const element = screen.getByTestId('userContainer')
-     // log(element.childElementCount)
     expect(element).toBeInTheDocument() 
-  
-  
-    /* const linkElement = screen.getByText(/learn react/i);
-    expect(linkElement).toBeInTheDocument(); */
+
   });
+
+  
   
   test('userContainer should be have 5 children by default', async () => {
     await render(<App />);
@@ -41,21 +39,30 @@ describe ('Users test', () => {
       users = screen.getAllByRole('listitem')
     })
       button = screen.getByText('Add User')
-    await waitFor (async () =>{
+
+    await waitFor (() =>{
 
       fireEvent.click(button)
-
-      newUsers = await screen.getAllByRole('listitem')
-      console.log(newUsers.lenght)
+      numOfPeople++
     })
-      expect(newUsers).toHaveLength(6)
-    
+      newUsers = screen.getAllByRole('listitem')
+      expect(newUsers).toHaveLength(numOfPeople)
   })
 
+  test('deleteUserButton should exist on the list', () => {
+    render(<App/>)
+    const deleteButton = screen.getByRole('button', { name: 'deleteBtn'})
+    expect(deleteButton).toBeDefined()
+  })
+
+  test('deleteUserButton should remove users from list', async () => {
+    render(<App/>)
+    const deleteButton = screen.getAllByRole('button', { name: 'deleteBtn'})
+    console.log(deleteButton)
+    await waitFor(() => {
+      users = screen.getAllByRole('listitem')
+    })
+
+    expect(users).toHaveLength(4)
+  })
 })
-
-
-
-
-// APP Should be show 5 users and test it
-

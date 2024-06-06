@@ -18,6 +18,7 @@ function App() {
     }, []) */
   return (
     <div className="App">
+      
       <header className="App-header">       
         <a
           className="App-link"
@@ -27,7 +28,7 @@ function App() {
         >
           Learn React
         </a>
-        <UserInfo users={list as any}/>
+      <UserInfo />
       </header>
     </div>
   );
