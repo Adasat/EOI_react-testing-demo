@@ -17,47 +17,50 @@ export const UserInfo = () => {
             const response = await getUsers(count)
             const data = await response.json();
             setList(data);
+            setFilteredList(data)
+
         }
         getUserFunction()
     }, [])
 
     const handleFilteredList = (user: string) => {
-        setFilteredList(list?.filter((e) => e?.name?.toLoweCase().includes(user.toLowerCase())))
-        console.log(filteredList)
+      console.log(typeof user)
+        if(user !== ''){
+          setFilteredList(list?.filter((e) => e?.name?.toLowerCase().includes(user.toLowerCase())))
+        } else{
+          setFilteredList(list)
+        }
     } 
 
     const handleChange = (user: {name: string}): void => {
         setList((preList)=> { return [...preList, user];});
+        setFilteredList((preList)=> { return [...preList, user];})
     }
     
     const removeUser = (userName: string) => {
       console.log('click on delete button')
       setList(list.filter((user) => user.name !== userName))
+      setFilteredList(filteredList.filter((user) => user.name !== userName))
     }
 
-    const filteredInputHasInfo = () => {
-        return filteredList.length > 0 ? filteredList : list
-    }
-    
+
     useEffect(() => {
-      console.log(list);
-    }, [list]);
-    
+    }, [list,filteredList]);
+
   return (
     <div id='userContainer'  data-testid='userContainer'>
         <FilterInput onInputChange={handleFilteredList}/>
      
       {
       
-      filteredInputHasInfo().map((user, i) => (
+      filteredList.map((user, i) => (
         <div key={i} className='listContainer'>
           <li>{user.name}</li>
-          <MdDelete
-            role='button'
+          <button
             className='deleteUser'
             aria-label='deleteBtn'
             onClick={() => removeUser(user.name)}
-          />
+          ></button>
         </div>
       ))}
 

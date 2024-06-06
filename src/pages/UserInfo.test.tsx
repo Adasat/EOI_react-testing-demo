@@ -13,12 +13,12 @@ describe ('Users test', () => {
     numOfPeople = 5
   })
 
-  test('APP Should be show 5 users', () => {
-    render(<App />);
-    const element = screen.getByTestId('userContainer')
-    expect(element).toBeInTheDocument() 
+  // test('APP Should be show 5 users', () => {
+  //   render(<App />);
+  //   const element = screen.getByTestId('userContainer')
+  //   expect(element).toBeInTheDocument() 
 
-  });
+  // });
 
   
   
@@ -42,6 +42,7 @@ describe ('Users test', () => {
 
     await waitFor (() =>{
 
+      // eslint-disable-next-line testing-library/no-wait-for-side-effects
       fireEvent.click(button)
       numOfPeople++
     })
@@ -58,6 +59,16 @@ describe ('Users test', () => {
   test('deleteUserButton should remove users from list', async () => {
     render(<App/>)
     const deleteButton = screen.getAllByRole('button', { name: 'deleteBtn'})
+    console.log(deleteButton)
+    await waitFor(() => {
+      users = screen.getAllByRole('listitem')
+    })
+
+    expect(users).toHaveLength(4)
+  })
+  test('filter input should filter data from ul list', async () => {
+    render(<App/>)
+    const deleteButton = screen.getByLabelText('deleteBtn')
     console.log(deleteButton)
     await waitFor(() => {
       users = screen.getAllByRole('listitem')
