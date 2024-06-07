@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getUsers } from '../services/userService';
 import { CustomForm } from '../components/CustomButton/CustomForm';
-import { MdDelete } from 'react-icons/md';
 
 import './UserInfo.css'
 import { FilterInput } from '../components/FilterInput/FilterInput';
@@ -60,7 +59,7 @@ export const UserInfo = () => {
             className='deleteUser'
             aria-label='deleteBtn'
             onClick={() => removeUser(user.name)}
-          ></button>
+          >Delete</button>
         </div>
       ))}
 
