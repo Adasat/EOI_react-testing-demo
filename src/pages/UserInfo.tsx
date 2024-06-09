@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CustomForm } from '../components/CustomButton/CustomForm';
+import { CustomForm } from '../components/CustomForm/CustomForm';
 import { getUsers } from '../services/userService';
 
 import { FilterInput } from '../components/FilterInput/FilterInput';

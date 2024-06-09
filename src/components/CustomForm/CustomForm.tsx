@@ -7,15 +7,24 @@ interface CustomFormProps {
 
 export const CustomForm = ({ handleChange }: CustomFormProps) => {
     const [newUser, setNewUser] = useState('')
+    const [showMessage, setShowMessage] = useState('')
 
     const handleClick = () => {
-      handleChange({name: newUser})
-      setNewUser('')
+      if (!newUser) {
+        setShowMessage('Write the name of new user');
+    } else {
+        handleChange({ name: newUser });
+        setShowMessage('');
+        setNewUser('');
+    }
     }
   return (
     <div id='form'>
       <input placeholder="User's name" onChange={(e) => setNewUser(e.target.value)} value={newUser} />
       <button onClick={handleClick}>Add User</button>
+      {showMessage && (
+        <p>{showMessage}</p>
+      )}
     </div>
   )
 }
